@@ -3,6 +3,7 @@ import { APP_GUARD } from "@nestjs/core";
 import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { config } from "dotenv";
+import { env } from "process";
 import { CategoriesController } from "./manage/categories/categories.controller";
 import { ColorsController } from "./manage/colors/colors.controller";
 import { ProductsController } from "./manage/products/products.controller";
@@ -13,7 +14,7 @@ config();
   imports: [
     TypeOrmModule.forRoot({
       type: "postgres",
-      url: process.env.DATABASE_URL,
+      url: env.DATABASE_URL,
       extra: {
         ssl: false,
       },
