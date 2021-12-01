@@ -4,10 +4,7 @@ import { ThrottlerGuard, ThrottlerModule } from "@nestjs/throttler";
 import { TypeOrmModule } from "@nestjs/typeorm";
 import { config } from "dotenv";
 import { CategoriesController } from "./manage/categories/categories.controller";
-import { Category } from "./manage/categories/entity/category.entity";
 import { ColorsController } from "./manage/colors/colors.controller";
-import { Color } from "./manage/colors/entity/color.entity";
-import { Product } from "./manage/products/entity/product.entity";
 import { ProductsController } from "./manage/products/products.controller";
 
 config();
@@ -17,7 +14,11 @@ config();
     TypeOrmModule.forRoot({
       type: "postgres",
       url: process.env.DATABASE_URL,
-      entities: [Product, Category, Color],
+      extra: {
+        ssl: false,
+      },
+      logging: true,
+      entities: ["src/**/entities/*.entities.ts"],
     }),
     ThrottlerModule.forRoot({
       ttl: 60,
